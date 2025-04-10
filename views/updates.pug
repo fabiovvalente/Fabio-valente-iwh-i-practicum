@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title Atualizar ou Criar Registro
+  body
+    h1= item ? 'Editar Objeto' : 'Criar Novo Objeto'
+    form(action="/update-cobj" method="POST")
+      if item
+        input(type="hidden" name="id" value=item.id)
+      div
+        label(for="name") Nome:
+        input(type="text" name="name" required value=(item && item.properties.name) || '')
+      div
+        label(for="marca") Marca:
+        input(type="text" name="marca" required value=(item && item.properties.marca) || '')
+      div
+        label(for="modelo") Modelo:
+        input(type="text" name="modelo" required value=(item && item.properties.modelo) || '')
+      div
+        button(type="submit") Enviar

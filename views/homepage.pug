@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    title= title
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="/css/style.css")
+  body
+    h1= title
+    a(href="/update-cobj") + Criar Novo
+
+    if data.length
+      table(border="1")
+        thead
+          tr
+            th Nome
+            th Marca
+            th Modelo
+            th Ações
+        tbody
+          each item in data
+            tr
+              td= item.properties.name
+              td= item.properties.marca
+              td= item.properties.modelo
+              td
+                a(href=`/update-cobj?id=${item.id}`) 📝 Editar
+    else
+      p Nenhum item encontrado. Clique em "Criar Novo" para adicionar.
