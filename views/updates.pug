@@ -1,20 +1,20 @@
 doctype html
 html
   head
-    title Atualizar ou Criar Registro
+    title Update or Create Record
   body
-    h1= item ? 'Editar Objeto' : 'Criar Novo Objeto'
+    h1= item ? 'Edit Object' : 'Create New Object'
     form(action="/update-cobj" method="POST")
       if item
         input(type="hidden" name="id" value=item.id)
       div
-        label(for="name") Nome:
+        label(for="name") Name:
         input(type="text" name="name" required value=(item && item.properties.name) || '')
       div
-        label(for="marca") Marca:
+        label(for="marca") Brand:
         input(type="text" name="marca" required value=(item && item.properties.marca) || '')
       div
-        label(for="modelo") Modelo:
+        label(for="modelo") Model:
         input(type="text" name="modelo" required value=(item && item.properties.modelo) || '')
       div
-        button(type="submit") Enviar
+        button(type="submit") Submit

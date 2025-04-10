@@ -7,16 +7,16 @@ html
     link(rel="stylesheet", href="/css/style.css")
   body
     h1= title
-    a(href="/update-cobj") + Criar Novo
+    a(href="/update-cobj") + Create New
 
     if data.length
       table(border="1")
         thead
           tr
-            th Nome
-            th Marca
-            th Modelo
-            th Ações
+            th Name
+            th Brand
+            th Model
+            th Actions
         tbody
           each item in data
             tr
@@ -24,6 +24,6 @@ html
               td= item.properties.marca
               td= item.properties.modelo
               td
-                a(href=`/update-cobj?id=${item.id}`) 📝 Editar
+                a(href=`/update-cobj?id=${item.id}`) 📝 Edit
     else
-      p Nenhum item encontrado. Clique em "Criar Novo" para adicionar.
+      p No items found. Click "Create New" to add one.

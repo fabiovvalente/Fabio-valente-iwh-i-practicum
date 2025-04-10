@@ -10,7 +10,7 @@ app.use(express.json());
 
 const PRIVATE_APP_ACCESS = process.env.PRIVATE_APP_ACCESS;
 
-// ROTA 1 – Página inicial com listagem dos objetos customizados
+// ROUTE 1 – Homepage with list of custom objects
 app.get('/', async (req, res) => {
     const objectTypeId = '2-43140771';
     const url = `https://api.hubapi.com/crm/v3/objects/${objectTypeId}?properties=name,marca,modelo`;
@@ -25,16 +25,16 @@ app.get('/', async (req, res) => {
         const data = response.data.results || [];
 
         res.render('homepage', {
-            title: 'Lista de Objetos Customizados',
+            title: 'Custom Objects List',
             data
         });
     } catch (error) {
-        console.error('Erro ao buscar objetos:', error.response?.data || error.message);
-        res.status(500).send('Erro ao buscar dados.');
+        console.error('Error fetching objects:', error.response?.data || error.message);
+        res.status(500).send('Error fetching data.');
     }
 });
 
-// ROTA 2 – Página com formulário para criar ou atualizar objeto
+// ROUTE 2 – Form page to create or update object
 app.get('/update-cobj', async (req, res) => {
     const objectTypeId = '2-43140771';
     const id = req.query.id;
@@ -53,18 +53,18 @@ app.get('/update-cobj', async (req, res) => {
         const response = await axios.get(url, { headers });
         res.render('updates', { item: response.data });
     } catch (error) {
-        console.error('Erro ao buscar objeto para edição:', error.response?.data || error.message);
-        res.status(500).send('Erro ao buscar objeto para edição.');
+        console.error('Error fetching object for editing:', error.response?.data || error.message);
+        res.status(500).send('Error fetching object for editing.');
     }
 });
 
-// ROTA 3 – Submissão para criar ou atualizar objeto
+// ROUTE 3 – Submit form to create or update object
 app.post('/update-cobj', async (req, res) => {
     const objectTypeId = '2-43140771';
     const { id, name, marca, modelo } = req.body;
 
     if (!name || !marca || !modelo) {
-        return res.status(400).send('Todos os campos são obrigatórios.');
+        return res.status(400).send('All fields are required.');
     }
 
     const data = {
@@ -78,21 +78,21 @@ app.post('/update-cobj', async (req, res) => {
 
     try {
         if (id) {
-            // Atualiza objeto existente
+            // Update existing object
             const url = `https://api.hubapi.com/crm/v3/objects/${objectTypeId}/${id}`;
             await axios.patch(url, data, { headers });
         } else {
-            // Cria novo
+            // Create new object
             const url = `https://api.hubapi.com/crm/v3/objects/${objectTypeId}`;
             await axios.post(url, data, { headers });
         }
 
         res.redirect('/');
     } catch (error) {
-        console.error('Erro ao criar/atualizar objeto:', error.response?.data || error.message);
-        res.status(500).send('Erro ao criar/atualizar objeto.');
+        console.error('Error creating/updating object:', error.response?.data || error.message);
+        res.status(500).send('Error creating/updating object.');
     }
 });
 
-// Inicializa o servidor
+// Start server
 app.listen(3000, () => console.log('Listening on http://localhost:3000'));
